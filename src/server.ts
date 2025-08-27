@@ -2,18 +2,17 @@
 import { Server } from "http";
 import mongoose from "mongoose";
 import { app } from "./app";
+import { envVars } from "./app/config/env";
 
 let server: Server;
 
 const startServer = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://admin_um:Jayed778@cluster0.lugl172.mongodb.net/tour-management-backend?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await mongoose.connect(envVars.DB_URL);
     console.log("Connected to db");
 
     server = app.listen(5000, () => {
-      console.log("Server is listening port 5000");
+      console.log(`Server is listening port ${envVars.PORT}`);
     });
   } catch (error) {
     console.log(error);
@@ -68,4 +67,4 @@ process.on("SIGINT", () => {
 
 // Promise.reject(new Error("I forgot to catch this error"));
 
-throw new Error("I forgot to handle this local error");
+// throw new Error("I forgot to handle this local error");
